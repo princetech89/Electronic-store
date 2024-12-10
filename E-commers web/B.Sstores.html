@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY GAGATE STORE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY" async defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        html,
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            height: 100%;
+        }
+
+        .video-background {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            /* Full viewport height */
+            overflow: hidden;
+            /* Prevents scrollbars caused by the video */
+        }
+
+        #bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            /* Places video behind content */
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            /* Ensures content is on top of the video */
+            color: white;
+            /* Text color for readability */
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            /* Optional: Adds a semi-transparent background for better text visibility */
+            border-radius: 10px;
+            /* Optional: Rounds the corners of the content box */
+            max-width: 600px;
+            /* Optional: Sets a maximum width for the content */
+            margin: auto;
+            /* Centers the content horizontally */
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            /* Place the video behind the content */
+        }
+
+        #header-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Ensures the video covers the entire header area */
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            /* Ensure content is on top of the video */
+            text-align: center;
+            color: white;
+            /* Adjust text color for visibility */
+            padding: 20px;
+            /* Add additional styling as needed */
+        }
+
+        header {
+            color: white;
+            padding: 1rem;
+            position: relative;
+            width: 100%;
+            height: 500px;
+            /* Adjust height as needed */
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            color: none;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        .product-section {
+            padding: 20px;
+            background-image: url('https://t3.ftcdn.net/jpg/02/74/82/40/360_F_274824034_3t3v22Z2pZPUG43wiUdTtZx1SXe2Fn68.jpg');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: cloumn;
+        }
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            animation: fadeIn 5s ease-in-out;
+        }
+
+        .product-item {
+            background: white;
+            border: 0px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            width: 200px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .product-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .add-to-cart {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: #0056b3;
+        }
+
+        .flash-deal-section {
+            padding: 20px;
+            background-image: url('https://img.freepik.com/free-vector/flash-sale-banner-template-design-vector-illustration_157027-503.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1725062400&semt=ais_hybrid');
+            text-align: center;
+        }
+
+        .flash-deal-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .flash-deal-item {
+            background: yellow;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            width: 250px;
+            text-align: center;
+            position: relative;
+        }
+
+        .flash-deal-images {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .flash-deal-images img {
+            width: 100%;
+            height: auto;
+            position: absolute;
+            animation: slide 10s infinite;
+        }
+
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+
+            33% {
+                transform: translateX(-100%);
+            }
+
+            66% {
+                transform: translateX(-200%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .deal-price {
+            color: red;
+            font-size: 18px;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #888;
+            margin-left: 10px;
+        }
+
+        .deal-timer {
+            font-size: 18px;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        #cart {
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+
+        #cart-items {
+            list-style: none;
+            padding: 1px;
+        }
+
+        #cart-items li {
+            margin-bottom: 10px;
+        }
+
+        .cart-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .reviews-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .review {
+            background-image: url('https://img.youtube.com/vi/V-FgQ2NAGFc/maxresdefault.jpg');
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1s forwards;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .review h3 {
+            margin: 0 0 10px;
+        }
+
+        .review p {
+            margin: 0;
+        }
+
+        .visitor-count-container {
+            background-color: red;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        #visitor-count {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+            display: inline-block;
+            animation: countUp 2s ease-in-out forwards;
+        }
+
+        /* Keyframes for count-up animation */
+        @keyframes countUp {
+            from {
+                transform: scale(1.2);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "poppins", sans-serif;
+        }
+
+        body {
+            background-color: #c9d6ff;
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+        }
+
+        .container {
+            background: #fff;
+            width: 450px;
+            padding: 1.5rem;
+            margin: 50px auto;
+            border-radius: 10px;
+            box-shadow: 0 20px 35px rgba(0, 0, 1, 0.9);
+        }
+
+        form {
+            margin: 0 2rem;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 1.3rem;
+            margin-bottom: 0.4rem;
+        }
+
+        input {
+            color: inherit;
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #757575;
+            padding-left: 1.5rem;
+            font-size: 15px;
+        }
+
+        .input-group {
+            padding: 1% 0;
+            position: relative;
+
+        }
+
+        .input-group i {
+            position: absolute;
+            color: black;
+        }
+
+        input:focus {
+            background-color: transparent;
+            outline: transparent;
+            border-bottom: 2px solid hsl(327, 90%, 28%);
+        }
+
+        input::placeholder {
+            color: transparent;
+        }
+
+        label {
+            color: #757575;
+            position: relative;
+            left: 1.2em;
+            top: -1.3em;
+            cursor: auto;
+            transition: 0.3s ease all;
+        }
+
+        input:focus~label,
+        input:not(:placeholder-shown)~label {
+            top: -3em;
+            color: hsl(327, 90%, 28%);
+            font-size: 15px;
+        }
+
+        .recover {
+            text-align: right;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+
+        }
+
+        .recover a {
+            text-decoration: none;
+            color: rgb(125, 125, 235);
+        }
+
+        .recover a:hover {
+            color: blue;
+            text-decoration: underline;
+        }
+
+        .btn {
+            font-size: 1.1rem;
+            padding: 8px 0;
+            border-radius: 5px;
+            outline: none;
+            border: none;
+            width: 100%;
+            background: rgb(125, 125, 235);
+            color: white;
+            cursor: pointer;
+            transition: 0.9s;
+        }
+
+        .btn:hover {
+            background: #07001f;
+        }
+
+        .or {
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+
+        .icons {
+            text-align: center;
+        }
+
+        .icons i {
+            color: rgb(125, 125, 235);
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border: 2px solid #dfe9f5;
+            margin: 0 15px;
+            transition: 1s;
+        }
+
+        .icons i:hover {
+            background: #07001f;
+            font-size: 1.6rem;
+            border: 2px solid rgb(125, 125, 235);
+        }
+
+        .links {
+            display: flex;
+            justify-content: space-around;
+            padding: 0 4rem;
+            margin-top: 0.9rem;
+            font-weight: bold;
+        }
+
+        button {
+            color: rgb(125, 125, 235);
+            border: none;
+            background-color: transparent;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        button:hover {
+            text-decoration: underline;
+            color: blue;
+        }
+
+        /* Modal overlay */
+        .modal-overlay {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            /* Semi-transparent background */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        /* Modal content */
+        .modal-content {
+            position: relative;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 80%;
+            max-height: 80%;
+            overflow: auto;
+        }
+
+        /* Close button */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: black;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Image styling */
+        .modal-image {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <nav>
+            <ul>
+                <li><a href="#Home">Home</a></li>
+                <li><a href="#Hot deals">Hot deals</a></li>
+                <li><a href="#Laptop">Laptop</a></li>
+                <li><a href="#Smartphone">Smartphone</a></li>
+                <li><a href="#HeadPhones">HeadPhones</a></li>
+                <li><a href="#Accessories">Accessories</a></li>
+                <li><a href="#Cart">Cart</a></li>
+            </ul>
+        </nav>
+        <div class="video-container">
+            <video autoplay muted loop id="header-video">
+                <source src="https://cdn.pixabay.com/video/2021/03/25/68962-529839776_large.mp4" type="video/mp4">
+                <!-- Additional formats can be included here -->
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </header>
+
+    <div id="update-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span id="close-modal" class="close-btn">×</span>
+            <h2>Important Update</h2>
+            <img src="background.jpg" alt="Update Image" class="modal-image">
+            <p>We have an important update for you. Please take a moment to review it.</p>
+        </div>
+    </div>
+
+    <section id="Laptop" class="product-section">
+        <div class="product-container">
+            <div class="product-item">
+                <img src="https://images.samsung.com/is/image/samsung/p6pim/in/feature/165331504/in-feature-galaxy-book-541825259?$FB_TYPE_I_JPG$"alt="Dell">
+                <h3>Dell</h3>
+                <p>$19.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="images (3) - Copy.jpeg" alt="samsung Laptop">
+                <h3>Samsung</h3>
+                <p>$29.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="image-720x980 (1).jpg" alt="Microsoft Laptop">
+                <h3>Microsoft</h3>
+                <p>$29.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="image-720x980 (2) asus.jpg" alt="Asus Laptop">
+                <h3>Asus</h3>
+                <p>$29.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="image-720x980 (3) amazon.jpg" alt="Hp Laptop">
+                <h3>Hp</h3>
+                <p>$29.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="Smartphone" class="product-section">
+        <div class="product-container">
+            <div class="product-item">
+                <img src="image-720x980 (4).jpg" alt="Apple">
+                <h3>Apple</h3>
+                <p>$19.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="image-720x980 (5).jpg" alt="Samsung">
+                <h3>Samsung</h3>
+                <p>$29.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="image-720x980 (6).jpg" alt="Google">
+                <h3>Google</h3>
+                <p>$29.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="image-720x980 (7).jpg" alt="Motorola">
+                <h3>Motorola</h3>
+                <p>$29.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="image-720x980 (8).jpg" alt="Oneplus">
+                <h3>Oneplus</h3>
+                <p>$29.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <!-- Add more product items as needed -->
+        </div>
+    </section>
+
+    <section id="Hot deals" class="flash-deal-section">
+        <h2>Flash Deal!</h2>
+        <div class="flash-deal-container">
+            <div class="flash-deal-item">
+                <div class="flash-deal-images">
+                    <img src="hp image.png" alt="Laptop">
+                    <img src="hp image.png" alt="Laptop">
+                    <img src="hp image.png" alt="Laptop">
+                </div>
+                <h3>Laptop</h3>
+                <p><span class="deal-price">$9.99</span> <span class="original-price">$19.99</span></p>
+                <button class="add-to-cart">Add to Cart</button>
+                <div class="deal-timer" id="timer1">00:00:00</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add more flash deal items as needed -->
+
+    <section id="HeadPhones" class="product-section">
+        <div class="product-container">
+            <div class="product-item">
+                <img src="image-720x980 (10).jpg" alt="Marshall">
+                <h3>Marshall</h3>
+                <p>$19.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="image-720x980 (11).jpg" alt="Apple">
+                <h3>Apple</h3>
+                <p>$29.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="image-720x980 (12).jpg" alt="Sony">
+                <h3>Sony</h3>
+                <p>$29.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="image-720x980 (13).jpg" alt="JBL">
+                <h3>JBL</h3>
+                <p>$29.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+    <!--ear budes back cover-->
+    <section id="Accessories" class="product-section">
+        <div class="product-container">
+            <div class="product-item">
+                <img src="image-600x980.jpg" alt="PowerBank">
+                <h3>PowerBank</h3>
+                <p>$19.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="image-600x980 (1).jpg" alt="cover">
+                <h3>cover</h3>
+                <p>$29.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="image-600x980 (2).jpg" alt="EarBuds">
+                <h3>EarBuds</h3>
+                <p>$29.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+            <div class="product-item">
+                <img src="image-600x980 (3).jpg" alt="Charger">
+                <h3>Charger</h3>
+                <p>$29.99</p>
+                <button class="add-to-cart">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    </section>
+    <div class="reviews-container" id="reviews-container"></div>
+    <section id="Cart">
+        <h2>Shopping Cart</h2>
+        <div class="cart-container">
+            <ul id="cart-items"></ul>
+            <p id="total">Total: $0.00</p>
+            <button id="checkout">Checkout</button>
+        </div>
+
+    </section>
+    <section id="map">
+        <h2>Find Us Here</h2>
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15216.139793639528!2d78.44108889999998!3d17.553522700000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1725176839351!5m2!1sen!2sin"
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="fast"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </section>
+
+    <h2>Contact Us</h2>
+    <div class="container" id="signup" style="display:none;">
+        <h1 class="form-title">Register</h1>
+        <form method="post" action="">
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" name="fName" id="fName" placeholder="First Name" required>
+                <label for="fname">First Name</label>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" name="lName" id="lName" placeholder="Last Name" required>
+                <label for="lName">Last Name</label>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" name="email" id="email" placeholder="Email" required>
+                <label for="email">Email</label>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+                <label for="password">Password</label>
+            </div>
+            <input type="submit" class="btn" value="Sign Up" name="signUp">
+        </form>
+        <p class="or">
+            ----------or--------
+        </p>
+        <div class="icons">
+            <i class="fab fa-google"></i>
+            <i class="fab fa-facebook"></i>
+        </div>
+        <div class="links">
+            <p>Already Have Account ?</p>
+            <button id="signInButton">Sign In</button>
+        </div>
+    </div>
+    
+    <div class="container" id="signIn">
+        <h1 class="form-title">Sign In</h1>
+        <form method="post" action="">
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" name="email" id="email" placeholder="Email" required>
+                <label for="email">Email</label>
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+                <label for="password">Password</label>
+            </div>
+            <p class="recover">
+                <a href="#">Recover Password</a>
+            </p>
+            <input type="submit" class="btn" value="Sign In" name="signIn">
+        </form>
+        <p class="or">
+            ----------or--------
+        </p>
+        <div class="icons">
+            <i class="fab fa-google"></i>
+            <i class="fab fa-facebook"></i>
+        </div>
+        <div class="links">
+            <p>Don't have account yet?</p>
+            <button id="signUpButton">Sign Up</button>
+        </div>
+    </div>
+    <br>
+    <div class="visitor-count-container">
+        <h2>Visitor Count: <span id="visitor-count">0</span></h2>
+    </div>
+    </br>
+
+    <footer>
+        <p>&copy; 2024 My E-Commerce Store</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cart = [];
+            const cartItems = document.getElementById('cart-items');
+            const totalElement = document.getElementById('total');
+
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', () => {
+                    const productElement = button.parentElement;
+                    const id = productElement.getAttribute('data-id');
+                    const name = productElement.querySelector('h3').textContent;
+                    const price = parseFloat(productElement.querySelector('p').textContent.replace('$', ''));
+
+                    // Add product to cart
+                    cart.push({ id, name, price });
+
+                    // Update cart display
+                    updateCart();
+                });
+            });
+
+            function updateCart() {
+                cartItems.innerHTML = ''; // Clear the current cart items
+                let total = 0;
+
+                cart.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                    cartItems.appendChild(li);
+                    total += item.price;
+                });
+
+                totalElement.textContent = `Total: $${total.toFixed(2)}`;
+            }
+
+            document.getElementById('checkout').addEventListener('click', () => {
+                alert('Checkout is not implemented in this demo.');
+            });
+        });
+        AOS.init();
+        function startCountdown(elementId, endTime) {
+            const timerElement = document.getElementById(elementId);
+
+            function updateTimer() {
+                const now = new Date();
+                const timeRemaining = endTime - now;
+
+                if (timeRemaining <= 0) {
+                    timerElement.textContent = "EXPIRED";
+                    clearInterval(interval);
+                    return;
+                }
+
+                const hours = Math.floor((timeRemaining / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((timeRemaining / (1000 * 60)) % 60);
+                const seconds = Math.floor((timeRemaining / 1000) % 60);
+
+                timerElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+
+            const interval = setInterval(updateTimer, 1000);
+        }
+
+        // Set up a countdown timer for each Flash Deal item
+        document.addEventListener('DOMContentLoaded', () => {
+            const endTimes = {
+                timer1: new Date(new Date().getTime() + 24 * 60 * 60 * 1000) // 24 hours from now
+                // Add more timers for additional Flash Deals
+            };
+
+            for (const [id, endTime] of Object.entries(endTimes)) {
+                startCountdown(id, endTime);
+            }
+        });
+
+        function initMap() {
+            var location = { lat: 37.7749, lng: -122.4194 };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: location
+            });
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+        }
+        //-------------------------------//
+        // script.js
+        document.addEventListener("DOMContentLoaded", function () {
+            const reviewsContainer = document.getElementById('reviews-container');
+
+            // Example reviews data
+            const reviews = [
+                { name: "Alice", text: "Fantastic service and support!" },
+                { name: "Bob", text: "Really enjoyed the product. Will buy again." },
+                { name: "Charlie", text: "Good quality, but delivery was slow." }
+            ];
+
+            reviews.forEach((review, index) => {
+                const reviewElement = document.createElement('div');
+                reviewElement.className = 'review';
+                reviewElement.style.animationDelay = `${index * 0.2}s`; // Stagger animations
+                reviewElement.innerHTML = `<h3>${review.name}</h3><p>${review.text}</p>`;
+                reviewsContainer.appendChild(reviewElement);
+            });
+        });
+
+        //------------------------//
+        // script.js
+        document.addEventListener("DOMContentLoaded", function () {
+            const visitorCountElement = document.getElementById('visitor-count');
+
+            let visitorCount = parseInt(localStorage.getItem('visitorCount')) || 0;
+
+            // Increment visitor count
+            visitorCount++;
+            localStorage.setItem('visitorCount', visitorCount);
+
+            // Animate the visitor count
+            animateVisitorCount(visitorCountElement, visitorCount);
+        });
+
+        function animateVisitorCount(element, count) {
+            let current = 0;
+            const increment = Math.ceil(count / 100); // Adjust increment to control animation speed
+
+            function updateCount() {
+                if (current < count) {
+                    current += increment;
+                    if (current > count) current = count; // Ensure count doesn't exceed the target
+                    element.textContent = current;
+                    requestAnimationFrame(updateCount);
+                }
+            }
+
+            updateCount();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var modalOverlay = document.getElementById('update-modal');
+            var closeBtn = document.getElementById('close-modal');
+
+            // Show the modal when the page loads
+            modalOverlay.style.display = 'flex';
+
+            // Close the modal when the close button is clicked
+            closeBtn.addEventListener('click', function () {
+                modalOverlay.style.display = 'none';
+            });
+
+            // Optional: Close the modal if the user clicks outside the content
+            modalOverlay.addEventListener('click', function (event) {
+                if (event.target === modalOverlay) {
+                    modalOverlay.style.display = 'none';
+                }
+            });
+        });
+        const signUpButton = document.getElementById('signUpButton');
+        const signInButton = document.getElementById('signInButton');
+        const signInForm = document.getElementById('signIn');
+        const signUpForm = document.getElementById('signup');
+
+        signUpButton.addEventListener('click', function () {
+            signInForm.style.display = "none";
+            signUpForm.style.display = "block";
+        })
+        signInButton.addEventListener('click', function () {
+            signInForm.style.display = "block";
+            signUpForm.style.display = "none";
+        })
+    </script>
+</body>
+
+</html>

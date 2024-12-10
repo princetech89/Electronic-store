@@ -1,0 +1,12 @@
+/your_project
+├── /public
+│   ├── index.html
+│   ├── login.html
+│   ├── signup.html
+├── /src
+│   ├── login.php
+│   ├── signup.php
+│   ├── dashboard.php
+├── /config
+│   └── database.php
+└── /assets
